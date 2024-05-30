@@ -25,9 +25,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const spans = paragraph.querySelectorAll("span");
     spans.forEach((span, index) => {
       if (index < charsToChange) {
-        span.style.color = "grey";
-      } else {
         span.style.color = "white";
+        span.style.opacity = 0.8;
+      } else {
+        span.style.color = "grey";
+        span.style.opacity = 1;
       }
     });
   });
