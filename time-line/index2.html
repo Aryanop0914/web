@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scroll Animation Example</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        overflow: hidden;
+      }
+
+      .scroll-wrap {
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .scroll-wrap ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .scroll-wrap li {
+        font-size: 30px;
+        border: 2px solid red;
+        color: grey;
+        height: 100px;
+        transition: color 0.3s, opacity 0.3s;
+        display: flex;
+        align-items: center;
+        opacity: 0;
+      }
+
+      .scroll-wrap li.inView {
+        color: black;
+        opacity: 1;
+      }
+
+      .scroll-wrap li.initialVisible {
+        color: grey;
+        opacity: 1;
+      }
+
+      .extra {
+        height: 100vh;
+      }
+
+      .sticky {
+        position: sticky;
+        top: 33%;
+        height: 100px;
+        background-color: #f2f2f2;
+        border: 2px solid rgb(0, 0, 0);
+      }
+
+      .container {
+        display: flex;
+        flex-direction: row;
+        width: 80%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="extra"></div>
+    <div class="container">
+      <div class="sticky">
+        <h2>Sticky Container</h2>
+        <p>This is a sticky container that reveals text on scroll.</p>
+      </div>
+      <div class="scroll-wrap">
+        <ul>
+          <li class="initialVisible">Item 1</li>
+          <li class="initialVisible">Item 2</li>
+          <li class="initialVisible">Item 3</li>
+          <li>Item 4</li>
+          <li>Item 5</li>
+          <li>Item 6</li>
+          <li>Item 7</li>
+          <li>Item 8</li>
+          <li>Item 9</li>
+          <li>Item 10</li>
+          <li>Item 11</li>
+        </ul>
+      </div>
+    </div>
+    <div class="extra"></div>
+    <script>
+      window.addEventListener("scroll", function () {
+        let winTop = window.scrollY;
+        let sticky = document.querySelector(".sticky");
+        let stickyRect = sticky.getBoundingClientRect();
+        let stickyTop = stickyRect.top + window.scrollY;
+        let stickyBottom = stickyTop + sticky.offsetHeight;
+
+        document
+          .querySelectorAll(".scroll-wrap li")
+          .forEach(function (li, index, arr) {
+            let liRect = li.getBoundingClientRect();
+            let liTop = liRect.top + window.scrollY;
+            let liBottom = liTop + liRect.height;
+
+            if (liTop <= stickyBottom && liBottom >= stickyTop) {
+              li.classList.add("inView");
+            } else {
+              li.classList.remove("inView");
+            }
+
+            if (index >= 1 && index <= 3) {
+              li.classList.add("initialVisible");
+            } else {
+              li.classList.remove("initialVisible");
+            }
+
+            if (
+              liTop <= stickyTop + liRect.height &&
+              liBottom >= stickyTop - liRect.height
+            ) {
+              li.style.opacity = 1;
+            } else {
+              li.style.opacity = 0;
+            }
+          });
+      });
+
+      // Ensure the initial state is correct when the page loads
+      window.dispatchEvent(new Event("scroll"));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+.extra {
+  height: 100vh;
+}
+.handle-sticky {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100vh;
+  border: 2px solid black;
+}
+.sticky {
+  margin-top: 0px; /* Adjust the top offset as needed */
+  position: sticky;
+  top: 33%;
+  height: 100px;
+  background-color: #f2f2f2;
+  padding: 20px; /* Ensure the heading stays on top */
+  border: 2px solid rgb(0, 0, 0);
+}
+
+.content {
+  width: 80%;
+  height: 40vh;
+  border: 2px dotted black;
+  margin-top: 50px; /* Adjust the margin-top to avoid overlapping */
+  position: relative; /* Create a stacking context */
+  z-index: 0; /* Set the z-index lower than the heading */
+  overflow-y: scroll;
+}
+.content p {
+  border: 2px solid rgb(0, 0, 0);
+  background: aqua;
+}
+
+.content p.reveal {
+  opacity: 1;
+}
+
+.remove-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
+
+.invisible {
+  opacity: 0.2;
+}
